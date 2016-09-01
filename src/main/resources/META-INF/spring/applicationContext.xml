@@ -13,6 +13,8 @@
 
 	<!-- Import DB configuration xml. -->
 	<import resource="db-base-context.xml" />
+	<!-- Import spring configuration xml. -->
+	<import resource="security.xml" />
 
 	<!-- ***********Define the base package of repository ***************************** -->
 	<jpa:repositories base-package="com.att.*.repository"></jpa:repositories>

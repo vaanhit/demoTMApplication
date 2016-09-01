@@ -22,6 +22,11 @@
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
 </head>
 <body>
+
+	<li>
+		<a href='<spring:url value="/login.html" ></spring:url>'><spring:message code="label.header.login" /></a>
+	</li>
+
 	<div class="container">
 		<tiles:insertAttribute name="body" />
 	</div>
