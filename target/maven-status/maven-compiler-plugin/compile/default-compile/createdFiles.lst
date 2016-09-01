@@ -1,2 +1,4 @@
-com\att\demo\controller\LoginController.class
+com\att\demo\entity\Contact.class
+com\att\demo\controller\ContactController.class
 com\att\demo\controller\IndexController.class
+com\att\demo\controller\LoginController.class
