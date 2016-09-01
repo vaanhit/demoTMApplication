@@ -15,6 +15,6 @@ public class IndexController {
 	public String index(Model model) {
 		System.out.println("Inside Controller");
 
-		return "";
+		return "index";
 	}
 }
