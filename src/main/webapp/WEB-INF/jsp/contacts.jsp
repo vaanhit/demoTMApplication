@@ -7,6 +7,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<style type="text/css">
+/* tfoot input {
+	width: 100%;
+	padding: 3px;
+	box-sizing: border-box;
+ */	
+tfoot {
+    display: table-header-group;
+}
+}
+</style>	
+
 
 <script type="text/javascript">
 		$(document).ready(
@@ -22,13 +39,31 @@
 							});
 
 				});
+		
+		$(document).ready(function() {
+		    var table = $('#example').DataTable();
+		 
+		    $("#example tfoot th").each( function ( i ) {
+		        var select = $('<select><option value=""></option></select>')
+		            .appendTo( $(this).empty() )
+		            .on( 'change', function () {
+		                table.column( i )
+		                    .search( $(this).val() )
+		                    .draw();
+		            } );
+		 
+		        table.column( i ).data().unique().sort().each( function ( d, j ) {
+		            select.append( '<option value="'+d+'">'+d+'</option>' )
+		        } );
+		    } );
+		} );
 	</script>
 
 <title>Insert title here</title>
 </head>
 <body>
 
-	<table class="table table-bordered table-hover table-striped">
+	<table id="example" class="table table-bordered table-hover table-striped display">
 		<thead>
 			<tr>
 				<th>First Name</th>
@@ -59,10 +94,9 @@
 				</tr>
 			</c:forEach>
 
-			</td>
 	</table>
-
-	<!-- Modal -->
+	
+	<!-- Contact Delete Confirmation Message -->
 	<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -86,5 +120,6 @@
 		</div>
 	</div>
 	</div>
+	<!-- ----------------------------------------------------------------- -->
 </body>
 </html>
