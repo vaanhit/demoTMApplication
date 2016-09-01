@@ -297,6 +297,35 @@
 	<!-- Implement profiles in maven for the different environment. -->
 	<!-- We can change default profile dynamically while maven build mvn package 
 		-Denv=local/dev/test -->
+	<profiles>
+		<profile>
+			<id>local</id>
+			<!-- The development profile is active by default -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<env>local</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+		</profile>
+	</profiles>
+
+
+	<!-- Implement profiles in maven for the different environment. -->
+	<!-- We can change default profile dynamically while maven build mvn package 
+		-Denv=local/dev/test -->
 	<!-- <profiles> <profile> <id>local</id> <properties> <env>local</env> <profileName>localH</profileName> 
 		</properties> </profile> <profile> <id>dev</id> The development profile is 
 		active by default <activation> <activeByDefault>true</activeByDefault> </activation> 
@@ -308,7 +337,7 @@
 		<filters>
 			<!-- Ensures that the config.properties file is always loaded from the 
 				configuration directory of the active Maven profile. -->
-			<!-- <filter>src/main/profiles/${env}.properties</filter> -->
+			<filter>src/main/profiles/${env}.properties</filter>
 		</filters>
 		<plugins>
 			<plugin>
@@ -329,12 +358,12 @@
 				<version>2.4</version> </plugin> -->
 		</plugins>
 
-		<!-- <resources>
+		<resources>
 			<resource>
 				<filtering>true</filtering>
 				<directory>src/main/resources</directory>
 			</resource>
-		</resources> -->
+		</resources>
 	</build>
 
 	<dependencyManagement>
