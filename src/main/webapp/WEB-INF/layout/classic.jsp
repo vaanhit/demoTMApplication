@@ -53,29 +53,43 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li class="${current == 'index' ? active :''}"><a
-							href='<spring:url value="/"  />'>Home</a>
+							href='<spring:url value="/"  />'><spring:message code="label.header.home"></spring:message></a>
 						</li>
 						<securitys:authorize access="isAuthenticated()">
 							<li class="${current == 'contacts' ? active :''}"><a
-								href='<spring:url value="/contacts.html" ></spring:url>'>Contact List</a></li>
+								href='<spring:url value="/contacts.html" ></spring:url>'><spring:message code="label.header.contactList"></spring:message></a></li>
 						</securitys:authorize >
 						
 						<securitys:authorize access="hasRole('ROLE_ADMIN')">
 							<li class="${current == 'activity' ? active :''}"><a
-								href='<spring:url value="/" ></spring:url>'>Activity log</a></li>
+								href='<spring:url value="/" ></spring:url>'><spring:message code="label.header.activityLog"></spring:message></a></li>
 						</securitys:authorize >
 						
 						<securitys:authorize access="! isAuthenticated()">
 							<li><a href='<spring:url value="/login.html" >
-							</spring:url>'>Login</a>
+							</spring:url>'><spring:message code="label.header.login"></spring:message></a>
 							</li>
 						</securitys:authorize> 
 						
 						<securitys:authorize access="isAuthenticated()">
 							<li><a href='<spring:url value="/logout" >
-							</spring:url>'>Logout</a></li>
+							</spring:url>'><spring:message code="label.header.logout"></spring:message></a></li>
 						</securitys:authorize></li>
-					</ul>
+
+					<!--  Language dropdown -->
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><spring:message
+								code="label.header.language" /><span class="caret"></span> </a>
+
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="?language=en"><spring:message
+										code="label.header.english" /></a></li>
+							<li><a href="?language=zh_CN"><spring:message
+										code="label.header.chinese" /></a></li>
+							<li><a href="?language=de"><spring:message
+										code="label.header.other" /></a></li>
+						</ul></li>
+				</ul>
 				</div>
 			</div>
 				<!--/.container-fluid -->

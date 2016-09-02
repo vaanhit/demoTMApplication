@@ -48,12 +48,12 @@
 
 <form class="form-signin" action="<c:url value="/login" />" 
 	method='POST'>
-	<h2 class="form-signin-heading">Please sign in</h2>
+	<h2 class="form-signin-heading"><spring:message code="label.login.heading"/></h2>
 	<input type="text" name="username" id="inputEmail" class="form-control"
-		placeholder="User Name" required autofocus> 
+		placeholder='<spring:message code="label.login.username.placeholder"></spring:message>' required autofocus> 
 	<input type="password"
 		name="password" id="inputPassword" class="form-control"
-		placeholder="Password" required>
-	<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+		placeholder='<spring:message code="label.login.password.placeholder"></spring:message>' required>
+	<button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="label.login.submit"></spring:message></button>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>

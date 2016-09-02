@@ -73,7 +73,6 @@ tfoot {
 					});
 </script>
 
-<title>Insert title here</title>
 </head>
 <body>
 	<div>
@@ -81,15 +80,15 @@ tfoot {
 		class="table table-bordered table-hover table-striped display">
 		<thead>
 			<tr>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>DOB</th>
-				<th>SSN</th>
-				<th>Street</th>
-				<th>City</th>
-				<th>State</th>
-				<th>Zip</th>
-				<th>User</th>
+				<th><spring:message code="label.contact.fName"></spring:message></th>
+				<th><spring:message code="label.contact.lName"></spring:message></th>
+				<th><spring:message code="label.contact.dob"></spring:message></th>
+				<th><spring:message code="label.contact.ssn"></spring:message></th>
+				<th><spring:message code="label.contact.street"></spring:message></th>
+				<th><spring:message code="label.contact.city"></spring:message></th>
+				<th><spring:message code="label.contact.state"></spring:message></th>
+				<th><spring:message code="label.contact.zip"></spring:message></th>
+				<th><spring:message code="label.contact.user"></spring:message></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -111,7 +110,7 @@ tfoot {
 					</button>
 					<td><a
 						href='<spring:url value="/contacts/remove/${contact.id}.html" ></spring:url>'
-						class="btn btn-danger triggerRemove">Remove Contact</a>
+						class="btn btn-danger triggerRemove"><spring:message code="label.remove.removeContact"></spring:message></a>
 					</td>
 					
 				</tr>
@@ -128,14 +127,13 @@ tfoot {
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Remove Contact(s)</h4>
+					<h4 class="modal-title" id="myModalLabel"><spring:message code="label.remove.removeContacts"></spring:message></h4>
 				</div>
-				<div class="modal-body">Do you really want to remove this
-					contact(s)?</div>
+				<div class="modal-body"><spring:message code="label.remove.removeConfirmation"></spring:message></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">
 						Cancel</button>
-					<a href="" class="btn btn-danger  removebtn">Delete</a>
+					<a href="" class="btn btn-danger  removebtn"><spring:message code="label.remove.delete"></spring:message></a>
 				</div>
 
 			</div>
@@ -164,7 +162,7 @@ tfoot {
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
-						Add Contact
+						<spring:message code="label.add.contact"></spring:message>
 					</h4>
 				</div>
 				<!-- End: Add Header in the popup -->
@@ -172,7 +170,7 @@ tfoot {
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">
-							First Name:
+							<spring:message code="label.add.fName"></spring:message>
 						</label>
 						<div class="col-sm-10">
 							<form:input path="firstName" cssClass="form-control" />
@@ -180,7 +178,7 @@ tfoot {
 					</div>
 					<div class="form-group">
 						<label for="lastName" class="col-sm-2 control-label">
-							Last Name:
+							<spring:message code="label.add.lName"></spring:message>
 						</label>
 						<div class="col-sm-10">
 							<form:input path="lastName" cssClass="form-control" />
@@ -188,7 +186,7 @@ tfoot {
 					</div>
 					<div class="form-group">
 						<label for="dob" class="col-sm-2 control-label">
-							DOB:
+							<spring:message code="label.add.dob"></spring:message>
 						</label>
 						<div class="col-sm-10">
 							<form:input path="dob" cssClass="form-control" />
@@ -196,7 +194,7 @@ tfoot {
 					</div>
 					<div class="form-group">
 						<label for="ssn" class="col-sm-2 control-label">
-							SSN:
+							<spring:message code="label.add.ssn"></spring:message>
 						</label>
 						<div class="col-sm-10">
 							<form:input path="ssn" cssClass="form-control" />
@@ -204,7 +202,7 @@ tfoot {
 					</div>
 					<div class="form-group">
 						<label for="street" class="col-sm-2 control-label">
-							Street:
+							<spring:message code="label.add.street"></spring:message>
 						</label>
 						<div class="col-sm-10">
 							<form:input path="street" cssClass="form-control" />
@@ -212,7 +210,7 @@ tfoot {
 					</div>
 					<div class="form-group">
 						<label for="city" class="col-sm-2 control-label">
-							City:
+							<spring:message code="label.add.city"></spring:message>
 						</label>
 						<div class="col-sm-10">
 							<form:input path="city" cssClass="form-control" />
@@ -220,7 +218,7 @@ tfoot {
 					</div>
 					<div class="form-group">
 						<label for="state" class="col-sm-2 control-label">
-							State:
+							<spring:message code="label.add.state"></spring:message>
 						</label>
 						<div class="col-sm-10">
 							<form:input path="state" cssClass="form-control" />
@@ -228,7 +226,7 @@ tfoot {
 					</div>
 					<div class="form-group">
 						<label for="zip" class="col-sm-2 control-label">
-							Zip:
+							<spring:message code="label.add.zip"></spring:message>
 						</label>
 						<div class="col-sm-10">
 							<form:input path="zip" cssClass="form-control" />
@@ -239,7 +237,7 @@ tfoot {
 				<!-- Start: footer of the popup -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">
-						Close
+						<spring:message code="label.add.close"></spring:message>
 					</button>
 					<input type="submit" class="btn btn-primary" value="Save" />
 
