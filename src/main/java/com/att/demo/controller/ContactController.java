@@ -1,14 +1,21 @@
 package com.att.demo.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.security.Principal;
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.att.demo.entity.Contact;
+import com.att.demo.service.ContactService;
 
 /**
  * @author Rohit
@@ -18,33 +25,59 @@ import com.att.demo.entity.Contact;
 @RequestMapping("/contacts")
 public class ContactController {
 
+	@Autowired
+	ContactService contactService;
+
+	/**
+	 * @return
+	 */
+	@ModelAttribute("contact")
+	public Contact constructBlog() {
+		return new Contact();
+	}
+
 	/**
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping
-	public String contacts(Model model) {
+	public String contacts(Model model, Principal principal) {
 		// List<Contact> lst = contactService.findAll();
 
-		List<Contact> contacts = getContacts();
-
-		model.addAttribute("contacts", contacts);
+		// List<Contact> con = getContacts();
+		List<Contact> con = contactService.getContact(principal.getName());
+		model.addAttribute("contacts", con);
 		return "contacts";
 	}
 
 	/**
-	 * @return Dummy data for testing.
+	 * @param id
+	 * @param model
+	 * @return
 	 */
-	private List<Contact> getContacts() {
+	@RequestMapping(value = "/remove/{id}")
+	public String removeContact(@PathVariable int id, Model model) {
+		contactService.removeContact(id);
+		return "redirect:/contacts.html";
+	}
 
-		List<Contact> contacts = new ArrayList<Contact>();
+	/**
+	 * @param model
+	 * @param contact
+	 * @param result
+	 * @param principal
+	 * @return
+	 */
+	@RequestMapping(value = "/addContact", method = RequestMethod.POST)
+	public String saveContact(Model model, @Valid @ModelAttribute("contact") Contact contact, BindingResult result,
+			Principal principal) {
 
-		contacts.add(new Contact("F1", "L1", new Date(), 1111, "Street 1", "City 1", "state 1", 222221));
-		contacts.add(new Contact("F2", "L2", new Date(), 1112, "Street 2", "City 2", "state 2", 222222));
-		contacts.add(new Contact("F3", "L3", new Date(), 1113, "Street 3", "City 3", "state 3", 222223));
-		contacts.add(new Contact("F4", "L4", new Date(), 1114, "Street 4", "City 4", "state 4", 222224));
+		String Currentname = principal.getName();
 
-		return contacts;
+		Contact con = contactService.saveContact(contact, Currentname);
+		// List<Contact> con = addContacts(contact, Currentname);
+		model.addAttribute("contact", con);
+		return "redirect:/contacts.html";
 	}
 
 }

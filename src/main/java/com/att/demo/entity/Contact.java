@@ -25,11 +25,12 @@ public class Contact {
 	private String city;
 	private String state;
 	private long zip;
+	private String userName;
 
 	/**
 	 * No-Argument Constructor
 	 */
-	private Contact() {
+	public Contact() {
 
 	}
 
@@ -45,7 +46,9 @@ public class Contact {
 	 * @param state
 	 * @param zip
 	 */
-	public Contact(String fName, String lName, Date dob, long SSN, String street, String city, String state, long zip) {
+	public Contact(int id, String fName, String lName, Date dob, long SSN, String street, String city, String state, long zip, String userName) {
+		
+		this.id = id; // I will remove this. This is for testing.
 		this.firstName = fName;
 		this.lastName = lName;
 		this.dob = dob;
@@ -54,6 +57,7 @@ public class Contact {
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
+		this.userName = userName;
 
 	}
 
@@ -123,6 +127,14 @@ public class Contact {
 
 	public Integer getId() {
 		return id;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

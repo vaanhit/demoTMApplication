@@ -29,5 +29,26 @@
 	</bean>
 
 	<!-- ************************************************************************************************************* -->
+	
+	<!-- *******************Load the properties files for Locale ******************* -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:language/demoApp" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- We can set the default language property file. -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en" />
+	</bean>
+
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
+	<!-- ************************************************************************************************************* -->
+	
 
 </beans>
