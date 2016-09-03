@@ -32,6 +32,7 @@ public class ContactServiceImpl implements ContactService {
 	@Transactional
 	public Contact saveContact(Contact contact, String userName) {
 		contact.setUserName(userName);
+		
 		return contactRepository.save(contact);
 	}
 

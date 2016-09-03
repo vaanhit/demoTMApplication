@@ -68,13 +68,14 @@ public class ContactController {
 	 * @param principal
 	 * @return
 	 */
-	@RequestMapping(value = "/addContact", method = RequestMethod.POST)
-	public String saveContact(Model model, @Valid @ModelAttribute("contact") Contact contact, BindingResult result,
+	@RequestMapping(value = "/addUpdateContact", method = RequestMethod.POST)
+	public String saveUpdateContact(Model model, @Valid @ModelAttribute("contact") Contact contact, BindingResult result,
 			Principal principal) {
 
 		String Currentname = principal.getName();
-
+		
 		Contact con = contactService.saveContact(contact, Currentname);
+		
 		// List<Contact> con = addContacts(contact, Currentname);
 		model.addAttribute("contact", con);
 		return "redirect:/contacts.html";

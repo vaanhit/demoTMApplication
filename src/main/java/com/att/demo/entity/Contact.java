@@ -46,8 +46,9 @@ public class Contact {
 	 * @param state
 	 * @param zip
 	 */
-	public Contact(int id, String fName, String lName, Date dob, long SSN, String street, String city, String state, long zip, String userName) {
-		
+	public Contact(int id, String fName, String lName, Date dob, long SSN, String street, String city, String state,
+			long zip, String userName) {
+
 		this.id = id; // I will remove this. This is for testing.
 		this.firstName = fName;
 		this.lastName = lName;
@@ -59,6 +60,14 @@ public class Contact {
 		this.zip = zip;
 		this.userName = userName;
 
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -125,10 +134,6 @@ public class Contact {
 		this.zip = zip;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-	
 	public String getUserName() {
 		return userName;
 	}

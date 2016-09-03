@@ -1,4 +1,8 @@
 com\att\demo\entity\Contact.class
+com\att\demo\repository\ContactRepository.class
 com\att\demo\controller\ContactController.class
-com\att\demo\controller\IndexController.class
+com\att\demo\service\impl\InitDbService.class
+com\att\demo\service\impl\ContactServiceImpl.class
+com\att\demo\service\ContactService.class
 com\att\demo\controller\LoginController.class
+com\att\demo\controller\IndexController.class

@@ -12,15 +12,20 @@
 
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+
 <style type="text/css">
-/* tfoot input {
-	width: 100%;
-	padding: 3px;
-	box-sizing: border-box;
- */
-tfoot {
-	display: table-header-group;
-}
+	/* tfoot input {
+		width: 100%;
+		padding: 3px;
+		box-sizing: border-box;
+	 */
+	tfoot {
+		display: table-header-group;
+	}
+	
+	table td.first { 
+		display: none; 
+	}
 }
 </style>
 
@@ -32,45 +37,65 @@ tfoot {
 			e.preventDefault();
 			$("#modalRemove .removebtn").attr("href", $(this).attr("href"));
 			$("#modalRemove").modal();
+			
+			
+			var table = $('#example').DataTable();
+			$("#example tfoot th").each(function(i) {
+				var select = $('<select><option value=""></option></select>')
+				.appendTo($(this).empty())
+				.on('change',function() {
+					table.column(i).search($(this).val()).draw();
+				});
+				table.column(i).data().unique().sort().each(
+					function(d, j) {
+						select.append('<option value="'+d+'">'
+										+ d
+										+ '</option>')
+					});
+				});
 
 		});
-
+		
+		var currentIndex;
+		
+		$('#myModal1').on('shown.bs.modal', function() {
+			if(currentIndex != -1) {
+				$("#contactId").val($("#id" + currentIndex).text());
+				$("#fName").val($("#fName" + currentIndex).text());
+				$("#lName").val($("#lName" + currentIndex).text());
+				$("#dob").val($("#dob" + currentIndex).text());
+				$("#ssn").val($("#ssn" + currentIndex).text());
+				$("#street").val($("#street" + currentIndex).text());
+				$("#city").val($("#city" + currentIndex).text());
+				$("#state").val($("#state" + currentIndex).text());
+				$("#zip").val($("#zip" + currentIndex).text());
+				$("#username").val($("#username" + currentIndex).text());
+			}
+		});
+		
+		$('#myModal1').on('hidden.bs.modal', function () {
+			$("#contactId").val("");
+			$("#fName").val("");
+			$("#lName").val("");
+			$("#dob").val("");
+			$("#ssn").val("");
+			$("#street").val("");
+			$("#city").val("");
+			$("#state").val("");
+			$("#zip").val("");
+			$("#username").val("");
+		}); 
+		
+		$(".triggerEdit").click(function(e) {
+			currentIndex = $(this).data("index");
+		});
+		
+		$(".triggerAdd").click(function(e) {
+			currentIndex = -1;
+		});
+		
 	});
-
-	$(document)
-			.ready(
-					function() {
-						var table = $('#example').DataTable();
-
-						$("#example tfoot th")
-								.each(
-										function(i) {
-											var select = $(
-													'<select><option value=""></option></select>')
-													.appendTo($(this).empty())
-													.on(
-															'change',
-															function() {
-																table
-																		.column(i)
-																		.search($(this).val())
-																		.draw();
-															});
-
-											table
-													.column(i)
-													.data()
-													.unique()
-													.sort()
-													.each(
-															function(d, j) {
-																select
-																		.append('<option value="'+d+'">'
-																				+ d
-																				+ '</option>')
-															});
-										});
-					});
+	
 </script>
 
 </head>
@@ -80,6 +105,7 @@ tfoot {
 		class="table table-bordered table-hover table-striped display">
 		<thead>
 			<tr>
+				<th style="display:none;">Id</th>
 				<th><spring:message code="label.contact.fName"></spring:message></th>
 				<th><spring:message code="label.contact.lName"></spring:message></th>
 				<th><spring:message code="label.contact.dob"></spring:message></th>
@@ -92,22 +118,24 @@ tfoot {
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${contacts}" var="contact">
+			<c:forEach items="${contacts}" var="contact" varStatus="index">
 				<tr>
-					<td>${contact.firstName}</td>
-					<td>${contact.lastName}</td>
-					<td>${contact.dob}</td>
-					<td>${contact.ssn}</td>
-					<td>${contact.street}</td>
-					<td>${contact.city}</td>
-					<td>${contact.state}</td>
-					<td>${contact.zip}</td>
-					<td>${contact.userName}</td>
+					<td id="id${index.index }" style="display:none;">${contact.id}</td>
+					<td id="fName${index.index }">${contact.firstName}</td>
+					<td id="lName${index.index }">${contact.lastName}</td>
+					<td id="dob${index.index }">${contact.dob}</td>
+					<td id="ssn${index.index }">${contact.ssn}</td>
+					<td id="street${index.index }">${contact.street}</td>
+					<td id="city${index.index }">${contact.city}</td>
+					<td id="state${index.index }">${contact.state}</td>
+					<td id="zip${index.index }">${contact.zip}</td>
+					<td id="username${index.index }">${contact.userName}</td>
 					<td>
-					<button type="button" class="btn  btn-primary"
-						data-toggle="modal" data-target="#myModal1">
+					<button type="button" class="btn  btn-primary triggerEdit"
+						data-toggle="modal" data-target="#myModal1" data-index="${index.index }">
 						Edit
 					</button>
+					</td>
 					<td><a
 						href='<spring:url value="/contacts/remove/${contact.id}.html" ></spring:url>'
 						class="btn btn-danger triggerRemove"><spring:message code="label.remove.removeContact"></spring:message></a>
@@ -144,13 +172,13 @@ tfoot {
 	
 	<!-- ---------------------- Start: Add new Contact ----------------------------------  -->
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary btn-lg"
+	<button type="button" class="btn btn-primary btn-lg triggerAdd"
 		data-toggle="modal" data-target="#myModal1">
 		Add Contact
 	</button>
 	
 	<!-- ------------------------- start : pop up for adding New Contact ----------------- -->
-	<form:form commandName="contact" action="contacts/addContact.html" method="POST" cssClass="form-horizontal  contactForm">
+	<form:form commandName="contact" action="contacts/addUpdateContact.html" method="POST" cssClass="form-horizontal  contactForm">
 	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -169,11 +197,15 @@ tfoot {
 				<!-- Start: body of the popup -->
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="name" class="col-sm-2 control-label">
+						<!-- <label path="id" id="contactId" style="visibility: hidden"/> -->
+						<form:input path="id" id="contactId" cssClass="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label">
 							<spring:message code="label.add.fName"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="firstName" cssClass="form-control" />
+							<form:input path="firstName" id="fName" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -181,7 +213,7 @@ tfoot {
 							<spring:message code="label.add.lName"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="lastName" cssClass="form-control" />
+							<form:input path="lastName" id="lName" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -189,7 +221,7 @@ tfoot {
 							<spring:message code="label.add.dob"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="dob" cssClass="form-control" />
+							<form:input path="dob" id="dob" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -197,7 +229,7 @@ tfoot {
 							<spring:message code="label.add.ssn"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="ssn" cssClass="form-control" />
+							<form:input path="ssn" id="ssn" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -205,7 +237,7 @@ tfoot {
 							<spring:message code="label.add.street"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="street" cssClass="form-control" />
+							<form:input path="street" id="street" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -213,7 +245,7 @@ tfoot {
 							<spring:message code="label.add.city"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="city" cssClass="form-control" />
+							<form:input path="city" id="city" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -221,7 +253,7 @@ tfoot {
 							<spring:message code="label.add.state"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="state" cssClass="form-control" />
+							<form:input path="state" id="state" cssClass="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -229,7 +261,7 @@ tfoot {
 							<spring:message code="label.add.zip"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="zip" cssClass="form-control" />
+							<form:input path="zip" id="zip" cssClass="form-control" />
 						</div>
 					</div>
 				</div>
