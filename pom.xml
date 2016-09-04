@@ -378,4 +378,31 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<scm>
+		<connection>scm:git:git@github.com:vaanhit/demoTMApplication.git</connection>
+		<developerConnection>scm:git:git@github.com:vaanhit/demoTMApplication.git</developerConnection>
+		<url>https://github.com/vaanhit/demoTMApplication.git</url>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<name>internal releases</name>
+			<url>http://ec2-54-161-219-42.compute-1.amazonaws.com:8081/nexus/content/repositories/releases
+	</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>internal snapshots</name>
+			<url>http://ec2-54-161-219-42.compute-1.amazonaws.com:8081/nexus/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>nexus-releases</id>
+			<url>http://ec2-54-161-219-42.compute-1.amazonaws.com:8081/nexus/content/repositories/thirdparty</url>
+		</repository>
+	</repositories>
 </project>
