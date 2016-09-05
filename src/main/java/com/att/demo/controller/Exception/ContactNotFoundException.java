@@ -18,5 +18,9 @@ public class ContactNotFoundException extends Exception {
 	public ContactNotFoundException(int id) {
 		super("EmployeeNotFoundException with id=" + id);
 	}
+	
+	public ContactNotFoundException() {
+		
+	}
 
 }

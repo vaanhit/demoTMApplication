@@ -64,8 +64,7 @@ public class ContactController {
 	 * @return
 	 */
 	@RequestMapping(value = "/remove/{id}")
-	public String removeContact(@PathVariable int id, Model model)
-			throws Exception {
+	public String removeContact(@PathVariable int id, Model model) throws Exception {
 
 		// http://localhost:8080/demoTMApplication/contacts/remove/1.html
 		try {
@@ -76,7 +75,7 @@ public class ContactController {
 		} catch (AccessDeniedException exp) {
 			// http://localhost:8080/demoTMApplication/contacts/remove/3.html
 			throw new AccessDeniedException("Authenticated user is not authorized");
-		}catch (Exception exp) {
+		} catch (Exception exp) {
 			throw new GenricException("Unknown Error Occured, please contact support.");
 		}
 
@@ -92,13 +91,28 @@ public class ContactController {
 	 */
 	@RequestMapping(value = "/addUpdateContact", method = RequestMethod.POST)
 	public String saveUpdateContact(Model model, @Valid @ModelAttribute("contact") Contact contact,
-			BindingResult result, Principal principal) {
-		/*if (result.hasErrors()) {
-			return "redirect:/contacts.html";
-		}*/
+			BindingResult result, Principal principal) throws Exception {
+		/*
+		 * if (result.hasErrors()) { return "redirect:/contacts.html"; }
+		 */
 
 		String Currentname = principal.getName();
-		Contact con = contactService.saveContact(contact, Currentname);
+		Contact con;
+
+		if (Currentname == null) {
+			return "login";
+		}
+		try {
+			con = contactService.saveContact(contact, Currentname);
+		} catch (IllegalArgumentException exp) {
+			throw new ContactNotFoundException();
+		} catch (AccessDeniedException exp) {
+			// http://localhost:8080/demoTMApplication/contacts/remove/3.html
+			throw new AccessDeniedException("Authenticated user is not authorized");
+		} catch (Exception exp) {
+			throw new GenricException("Unknown Error Occured, please contact support.");
+		}
+
 		model.addAttribute("contact", con);
 		return "redirect:/contacts.html";
 	}
