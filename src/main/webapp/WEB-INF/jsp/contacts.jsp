@@ -214,7 +214,7 @@
 					<td>
 					<button type="button" class="btn  btn-primary triggerEdit"
 						data-toggle="modal" data-target="#myModal1" data-index="${index.index }">
-						Edit
+						<spring:message code="label.contact.edit"></spring:message>
 					</button>
 					</td>
 					<td><a
@@ -255,7 +255,7 @@
 	<!-- Button trigger modal -->
 	<button type="button" class="btn btn-primary btn-lg triggerAdd"
 		data-toggle="modal" data-target="#myModal1">
-		Add Contact
+		<spring:message code="label.contact.addContact"></spring:message>
 	</button>
 	
 	<!-- ------------------------- start : pop up for adding New Contact ----------------- -->
