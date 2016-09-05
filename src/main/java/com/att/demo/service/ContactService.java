@@ -24,6 +24,12 @@ public interface ContactService {
 	/**
 	 * @return
 	 */
-	public void removeContact(Integer contactID);
+	public void removeContact(Contact con);
+	
+	/**
+	 * @param id
+	 * @return
+	 */
+	public Contact findOne(int id);
 
 }

@@ -388,8 +388,7 @@
 		<repository>
 			<id>nexus-releases</id>
 			<name>internal releases</name>
-			<url>http://ec2-54-161-219-42.compute-1.amazonaws.com:8081/nexus/content/repositories/releases
-	</url>
+			<url>http://ec2-54-161-219-42.compute-1.amazonaws.com:8081/nexus/content/repositories/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>nexus-snapshots</id>

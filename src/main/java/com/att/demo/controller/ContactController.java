@@ -42,9 +42,6 @@ public class ContactController {
 	 */
 	@RequestMapping
 	public String contacts(Model model, Principal principal) {
-		// List<Contact> lst = contactService.findAll();
-
-		// List<Contact> con = getContacts();
 		List<Contact> con = contactService.getContact(principal.getName());
 		model.addAttribute("contacts", con);
 		return "contacts";
@@ -57,7 +54,8 @@ public class ContactController {
 	 */
 	@RequestMapping(value = "/remove/{id}")
 	public String removeContact(@PathVariable int id, Model model) {
-		contactService.removeContact(id);
+		Contact con = contactService.findOne(id);
+		contactService.removeContact(con);
 		return "redirect:/contacts.html";
 	}
 
@@ -71,12 +69,13 @@ public class ContactController {
 	@RequestMapping(value = "/addUpdateContact", method = RequestMethod.POST)
 	public String saveUpdateContact(Model model, @Valid @ModelAttribute("contact") Contact contact, BindingResult result,
 			Principal principal) {
+		
+		if(result.hasErrors()) {
+			return "redirect:/contacts.html"; 
+		}
 
 		String Currentname = principal.getName();
-		
 		Contact con = contactService.saveContact(contact, Currentname);
-		
-		// List<Contact> con = addContacts(contact, Currentname);
 		model.addAttribute("contact", con);
 		return "redirect:/contacts.html";
 	}

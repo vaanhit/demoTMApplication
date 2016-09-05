@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 /**
  * @author Rohit
@@ -16,8 +17,11 @@ public class Contact {
 	@Id
 	@GeneratedValue
 	private Integer id;
-
+	
+	@Size(min=3, message="First Name must be atleast3 characters!")
 	private String firstName;
+	
+	@Size(min=3, message="Last Name must be atleast3 characters!")
 	private String lastName;
 	private java.util.Date dob;
 	private Long ssn;
@@ -25,6 +29,7 @@ public class Contact {
 	private String city;
 	private String state;
 	private long zip;
+	
 	private String userName;
 
 	/**

@@ -94,6 +94,64 @@
 			currentIndex = -1;
 		});
 		
+		/* Apply alpha Numaric validation and ssn numaricvalidation */
+		$('#fName,#lName,#ssn,#zip').keypress(function (e) {
+			var id =$(this).attr('id'); 
+			var regex;
+			if(id == 'ssn' || id =='zip') {
+				regex = new RegExp("^[1-9]\d*$");
+			} else {
+				regex = new RegExp("^[a-zA-Z0-9]+$");	
+			}
+		    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+		    if (regex.test(str)) {
+		        return true;
+		    }
+
+		    e.preventDefault();
+		    return false;
+		});
+		
+		$(".contactForm").validate({
+			rules : {
+				firstName : {
+					required : true,
+					minlength: 3
+				},
+				lastName : {
+					required : true,
+					minlength: 3
+				},
+				dob : {
+					required : true,
+				},
+				ssn : {
+					required : true,
+				},
+				street : {
+					required : true,
+				},
+				city : {
+					required : true,
+				},
+				state : {
+					required : true,
+				},
+				zip : {
+					required : true,
+				},
+				highlight : function(element) {
+					$(element).closest('.form_group')
+							.removeClass('has-success')
+							.addClass('has_error');
+				},
+				unhighlight : function(element) {
+					$(element).closest('.form_group')
+							.removeClass('has-error').addClass(
+									'has_success');
+				}
+			}
+		});
 	});
 	
 </script>
@@ -206,6 +264,7 @@
 						</label>
 						<div class="col-sm-10">
 							<form:input path="firstName" id="fName" cssClass="form-control" />
+							<form:errors path="firstName"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -214,6 +273,7 @@
 						</label>
 						<div class="col-sm-10">
 							<form:input path="lastName" id="lName" cssClass="form-control" />
+							<form:errors path="lastName"/>
 						</div>
 					</div>
 					<div class="form-group">
