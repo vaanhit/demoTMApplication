@@ -18,7 +18,7 @@ public class LoginController {
 	 */
 	@RequestMapping("/login")
 	public String login() {
-		System.out.println("Inside Login");
+		logger.info("Inside Login");
 		return "login";
 	}
 }

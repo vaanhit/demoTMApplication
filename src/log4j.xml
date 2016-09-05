@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+   <appender name="consoleAppender"
+      class="org.apache.log4j.ConsoleAppender">
+      <param name="Threshold" value="INFO" />
+      <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d
+             %-5p  [%c{1}] %m %n" />
+      </layout>
+   </appender>
+
+   <appender name="fileAppender"
+           class="org.apache.log4j.RollingFileAppender">
+      <param name="Threshold" value="INFO" />
+      <param name="File" value="demoTMApplication.log"/>
+      <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d
+                %-5p  [%c{1}] %m %n" />
+      </layout>
+   </appender>
+
+   <logger name="javabeat.net.log4j" additivity="false" >
+
+      <level value="INFO" />
+      <appender-ref ref="consoleAppender"/>
+      <appender-ref ref="fileAppender"/>
+   </logger>
+
+</log4j:configuration>
+
+<!-- TRACE Level -- Information
+This level of LOG4J framework provides most detailed information that any other level in the hierarchy. One should use and external log file to store the information from TRACE Level logging.
+DEBUG Level
+This level is used to support application developer and is used to help the developer in debugging the application.
+INFO Level
+In general circumstances INFO Level provides progress and chosen information only. This level should be used to show messages to end user and information should be displayed in console rather than in log file.
+WARN Level
+This level is used to show information about unexpected conditions arised through the running of application. This should be used to show and store log messages for events that are near error level but not errors exactly. One should show these messages on console.
+ERROR Level
+This level is used to inform serious failure reports or the information that may lead to terminate the application. One should show these messages on console.
+FATAL Level
+This level is used to record events that may lead to permanent failure or complete termination of application. One should show these messages on console.
+Other than these, there are two special levels as well
+ALL : It turns on all levels.
+OFF : It turns off all levels.
+ -->

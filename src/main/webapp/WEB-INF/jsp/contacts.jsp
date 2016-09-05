@@ -152,9 +152,24 @@
 				}
 			}
 		});
+		
+		 $(function () {
+		        $("#goalDeadline").datepicker({
+		            changeMonth: true,
+		            changeYear: true,
+		            minDate: +1
+		        });
+		    });
+		
 	});
 	
 </script>
+
+<style>
+	body.modal-open .goalDeadline {
+    z-index: 1200 !important;
+}
+</style>	
 
 </head>
 <body>
@@ -256,7 +271,7 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<!-- <label path="id" id="contactId" style="visibility: hidden"/> -->
-						<form:input path="id" id="contactId" cssClass="form-control" />
+						<form:input path="id" id="contactId" style="visibility: hidden" cssClass="form-control" />
 					</div>
 					<div class="form-group">
 						<label for="firstname" class="col-sm-2 control-label">
@@ -281,9 +296,15 @@
 							<spring:message code="label.add.dob"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="dob" id="dob" cssClass="form-control" />
-						</div>
-					</div>
+								<!-- <div class="controls">
+									<div class="input-prepend input-append">
+										<span class="add-on"></span><input class="input-medium goalDeadline"
+											type="text" id="goalDeadline" name="goalDeadline">
+									</div>
+								</div> -->
+								<form:input path="dob" id="dob" cssClass="form-control" />
+								</div>
+							</div>
 					<div class="form-group">
 						<label for="ssn" class="col-sm-2 control-label">
 							<spring:message code="label.add.ssn"></spring:message>

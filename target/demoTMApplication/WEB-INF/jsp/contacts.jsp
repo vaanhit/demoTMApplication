@@ -94,9 +94,82 @@
 			currentIndex = -1;
 		});
 		
+		/* Apply alpha Numaric validation and ssn numaricvalidation */
+		$('#fName,#lName,#ssn,#zip').keypress(function (e) {
+			var id =$(this).attr('id'); 
+			var regex;
+			if(id == 'ssn' || id =='zip') {
+				regex = new RegExp("^[1-9]\d*$");
+			} else {
+				regex = new RegExp("^[a-zA-Z0-9]+$");	
+			}
+		    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+		    if (regex.test(str)) {
+		        return true;
+		    }
+
+		    e.preventDefault();
+		    return false;
+		});
+		
+		$(".contactForm").validate({
+			rules : {
+				firstName : {
+					required : true,
+					minlength: 3
+				},
+				lastName : {
+					required : true,
+					minlength: 3
+				},
+				dob : {
+					required : true,
+				},
+				ssn : {
+					required : true,
+				},
+				street : {
+					required : true,
+				},
+				city : {
+					required : true,
+				},
+				state : {
+					required : true,
+				},
+				zip : {
+					required : true,
+				},
+				highlight : function(element) {
+					$(element).closest('.form_group')
+							.removeClass('has-success')
+							.addClass('has_error');
+				},
+				unhighlight : function(element) {
+					$(element).closest('.form_group')
+							.removeClass('has-error').addClass(
+									'has_success');
+				}
+			}
+		});
+		
+		 $(function () {
+		        $("#goalDeadline").datepicker({
+		            changeMonth: true,
+		            changeYear: true,
+		            minDate: +1
+		        });
+		    });
+		
 	});
 	
 </script>
+
+<style>
+	body.modal-open .goalDeadline {
+    z-index: 1200 !important;
+}
+</style>	
 
 </head>
 <body>
@@ -198,7 +271,7 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<!-- <label path="id" id="contactId" style="visibility: hidden"/> -->
-						<form:input path="id" id="contactId" cssClass="form-control" />
+						<form:input path="id" id="contactId" style="visibility: hidden" cssClass="form-control" />
 					</div>
 					<div class="form-group">
 						<label for="firstname" class="col-sm-2 control-label">
@@ -223,9 +296,15 @@
 							<spring:message code="label.add.dob"></spring:message>
 						</label>
 						<div class="col-sm-10">
-							<form:input path="dob" id="dob" cssClass="form-control" />
-						</div>
-					</div>
+								<!-- <div class="controls">
+									<div class="input-prepend input-append">
+										<span class="add-on"></span><input class="input-medium goalDeadline"
+											type="text" id="goalDeadline" name="goalDeadline">
+									</div>
+								</div> -->
+								<form:input path="dob" id="dob" cssClass="form-control" />
+								</div>
+							</div>
 					<div class="form-group">
 						<label for="ssn" class="col-sm-2 control-label">
 							<spring:message code="label.add.ssn"></spring:message>

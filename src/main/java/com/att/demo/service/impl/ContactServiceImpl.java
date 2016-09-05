@@ -32,7 +32,8 @@ public class ContactServiceImpl implements ContactService {
 	 */
 	@Override
 	@Transactional
-	public Contact saveContact(Contact contact, String userName) {
+	@PreAuthorize("#contact.userName == authentication.name or hasRole('ROLE_ADMIN')")
+	public Contact saveContact(@P("contact") Contact contact, String userName) {
 		contact.setUserName(userName);
 		
 		return contactRepository.save(contact);
