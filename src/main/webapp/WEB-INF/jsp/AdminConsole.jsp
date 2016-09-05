@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<title>Insert title here</title>
 </head>
 <body>
-	This is Home page of the website.
-	Any one can view this page. 
+	Only Admin can view this Page.
 </body>
 </html>

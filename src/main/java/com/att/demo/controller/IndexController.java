@@ -19,4 +19,11 @@ public class IndexController {
 
 		return "index";
 	}
+	
+	@RequestMapping("/adminConsole")
+	public String adminConsole(Model model) {
+		logger.info("Inside Admin Console");
+
+		return "adminConsole";
+	}
 }
