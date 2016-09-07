@@ -7,6 +7,7 @@
 
 </head>
 <body>
-	This is Index Page.	
+	This is Home page of the website.
+	Any one can view this page. 
 </body>
 </html>

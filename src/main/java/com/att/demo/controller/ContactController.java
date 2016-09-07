@@ -1,8 +1,6 @@
 package com.att.demo.controller;
 
-import java.io.IOException;
 import java.security.Principal;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.att.demo.controller.Exception.ContactNotFoundException;
@@ -94,9 +94,10 @@ public class ContactController {
 	@RequestMapping(value = "/addUpdateContact", method = RequestMethod.POST)
 	public String saveUpdateContact(Model model, @Valid @ModelAttribute("contact") Contact contact,
 			BindingResult result, Principal principal, RedirectAttributes redirectAttributes) throws Exception {
-		/*
-		 * if (result.hasErrors()) { return "redirect:/contacts.html"; }
-		 */
+
+		if (result.hasErrors()) {
+			return "redirect:/contacts.html";
+		}
 
 		String Currentname = principal.getName();
 		Contact con;
@@ -105,7 +106,8 @@ public class ContactController {
 			return "login";
 		}
 		try {
-			contact.setDob(new Date()); // should come from date picker - will work and fix
+			contact.setDob(new Date()); // should come from date picker - will
+										// work and fix
 			con = contactService.saveContact(contact, Currentname);
 		} catch (IllegalArgumentException exp) {
 			throw new ContactNotFoundException();
@@ -119,6 +121,25 @@ public class ContactController {
 		model.addAttribute("contact", con);
 		redirectAttributes.addFlashAttribute("success", "addUpdate");
 		return "redirect:/contacts.html";
+	}
+
+	/**
+	 * @param ssn
+	 * @return
+	 * 
+	 * 		This is for Unique SSN validation.
+	 */
+	@RequestMapping("/available")
+	@ResponseBody
+	public String available(@RequestParam Long ssn, @RequestParam Integer id) {
+		Contact con = contactService.findOneByssn(ssn);
+		Boolean available = true; 
+		if(con == null || id == con.getId()) {
+			available = false;
+		}
+		
+		System.out.println(available);
+		return available.toString();
 	}
 
 	/************************************************************

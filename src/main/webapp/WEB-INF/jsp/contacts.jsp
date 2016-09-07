@@ -128,6 +128,16 @@
 				}, */
 				ssn : {
 					required : true,
+					/* remote: {
+						url: "<spring:url value='/contacts/available.html'/>",
+						type: "get",
+						data: {	
+							myData: {
+								"ssn":  $("#ssn").val(),
+								"id": $("#contactId").val()
+							}
+						}	
+					} */
 				},
 				street : {
 					required : true,
@@ -150,10 +160,15 @@
 					$(element).closest('.form_group')
 							.removeClass('has-error').addClass(
 									'has_success');
+				}, messages:{
+					ssn:{
+						remote: "ssn number already exist."
+					}
 				}
+				
 			}
 		});
-		
+		/* TO-DO: Will look into this issue later to fix*/
 		 $(function () {
 		        $("#goalDeadline").datepicker({
 		            changeMonth: true,
@@ -319,6 +334,7 @@
 						</label>
 						<div class="col-sm-10">
 							<form:input path="ssn" id="ssn" cssClass="form-control" />
+							<form:errors path="ssn"/>
 						</div>
 					</div>
 					<div class="form-group">

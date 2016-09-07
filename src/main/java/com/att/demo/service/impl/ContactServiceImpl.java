@@ -63,5 +63,10 @@ public class ContactServiceImpl implements ContactService {
 	public Contact findOne(int id) {
 		return contactRepository.findOne(id);
 	}
+	
+	@Override
+	public Contact findOneByssn(Long ssn) {
+		return contactRepository.findByssn(ssn);
+	}
 
 }

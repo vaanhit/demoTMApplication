@@ -2,6 +2,7 @@ package com.att.demo.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,6 +11,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.att.demo.annotations.UniqueSSN;
 
 /**
  * @author Rohit
@@ -21,21 +24,24 @@ public class Contact {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	@Size(min=3, message="First Name must be atleast3 characters!")
+
+	@Size(min = 3, message = "First Name must be atleast 3 characters!")
 	private String firstName;
-	
-	@Size(min=3, message="Last Name must be atleast3 characters!")
+
+	@Size(min = 3, message = "Last Name must be atleast 3 characters!")
 	private String lastName;
-	
-	@DateTimeFormat(pattern="yyyy-dd-MM")
+
+	@DateTimeFormat(pattern = "yyyy-dd-MM")
 	private java.util.Date dob;
+	
+	/*@Column(unique = true)
+	@UniqueSSN(message = "This ssn is already exist.")*/
 	private Long ssn;
 	private String street;
 	private String city;
 	private String state;
 	private long zip;
-	
+
 	private String userName;
 
 	/**
@@ -57,7 +63,7 @@ public class Contact {
 	 * @param state
 	 * @param zip
 	 */
-	public Contact(int id, String fName, String lName,Date dob, long SSN, String street, String city, String state,
+	public Contact(int id, String fName, String lName, Date dob, long SSN, String street, String city, String state,
 			long zip, String userName) {
 
 		this.id = id; // I will remove this. This is for testing.
@@ -96,11 +102,11 @@ public class Contact {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	public java.util.Date getDob() {
 		return dob;
 	}
-	
+
 	public void setDob(java.util.Date dob) {
 		this.dob = dob;
 	}

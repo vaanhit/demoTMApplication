@@ -62,7 +62,7 @@
 						
 						<securitys:authorize access="hasRole('ROLE_ADMIN')">
 							<li class="${current == 'activity' ? active :''}"><a
-								href='<spring:url value="/" ></spring:url>'><spring:message code="label.header.activityLog"></spring:message></a></li>
+								href='<spring:url value="/adminConsole.html" ></spring:url>'><spring:message code="label.header.activityLog"></spring:message></a></li>
 						</securitys:authorize >
 						
 						<securitys:authorize access="! isAuthenticated()">

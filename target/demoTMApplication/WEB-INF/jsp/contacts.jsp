@@ -26,6 +26,7 @@
 	table td.first { 
 		display: none; 
 	}
+	
 }
 </style>
 
@@ -122,9 +123,9 @@
 					required : true,
 					minlength: 3
 				},
-				dob : {
+				/* dob : {
 					required : true,
-				},
+				}, */
 				ssn : {
 					required : true,
 				},
@@ -161,6 +162,8 @@
 		        });
 		    });
 		
+		 $("#dob").prop("disabled", true);
+			
 	});
 	
 </script>
@@ -173,6 +176,11 @@
 
 </head>
 <body>
+	<!--  Registration success check. -->	
+	<c:if test="${success eq 'addUpdate'}">
+		<div class="alert alert-success"><spring:message code="label.contact.addUpdate.Success" /></div>
+	</c:if>
+
 	<div>
 	<table id="example"
 		class="table table-bordered table-hover table-striped display">
@@ -206,7 +214,7 @@
 					<td>
 					<button type="button" class="btn  btn-primary triggerEdit"
 						data-toggle="modal" data-target="#myModal1" data-index="${index.index }">
-						Edit
+						<spring:message code="label.contact.edit"></spring:message>
 					</button>
 					</td>
 					<td><a
@@ -247,7 +255,7 @@
 	<!-- Button trigger modal -->
 	<button type="button" class="btn btn-primary btn-lg triggerAdd"
 		data-toggle="modal" data-target="#myModal1">
-		Add Contact
+		<spring:message code="label.contact.addContact"></spring:message>
 	</button>
 	
 	<!-- ------------------------- start : pop up for adding New Contact ----------------- -->
@@ -302,7 +310,7 @@
 											type="text" id="goalDeadline" name="goalDeadline">
 									</div>
 								</div> -->
-								<form:input path="dob" id="dob" cssClass="form-control" />
+								<form:input path="dob"  id="dob" cssClass="form-control" />
 								</div>
 							</div>
 					<div class="form-group">
