@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-	<%@ include file="../layout/taglib.jsp"%>
-	
-	<style>
+
+<%@ include file="../layout/taglib.jsp"%>
+
+<style>
 .form-signin {
 	max-width: 330px;
 	padding: 15px;
@@ -44,16 +44,31 @@
 	border-top-right-radius: 0;
 }
 </style>
-	
 
-<form class="form-signin" action="<c:url value="/login" />" 
-	method='POST'>
-	<h2 class="form-signin-heading"><spring:message code="label.login.heading"/></h2>
-	<input type="text" name="username" id="inputEmail" class="form-control"
-		placeholder='<spring:message code="label.login.username.placeholder"></spring:message>' required autofocus> 
-	<input type="password"
-		name="password" id="inputPassword" class="form-control"
-		placeholder='<spring:message code="label.login.password.placeholder"></spring:message>' required>
-	<button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="label.login.submit"></spring:message></button>
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form>
+<body>
+	<div class="container">
+		<c:if test="${not empty error}">
+			<div class="error">${error}</div>
+		</c:if>
+
+	<form class="form-signin" action="<c:url value="/login" />"
+		method='POST'>
+		<h2 class="form-signin-heading">
+			<spring:message code="label.login.heading" />
+		</h2>
+		<input type="text" name="username" id="inputEmail"
+			class="form-control"
+			placeholder='<spring:message code="label.login.username.placeholder"></spring:message>'
+			required autofocus> <input type="password" name="password"
+			id="inputPassword" class="form-control"
+			placeholder='<spring:message code="label.login.password.placeholder"></spring:message>'
+			required>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">
+			<spring:message code="label.login.submit"></spring:message>
+		</button>
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
+	</form>
+</div>
+
+</body>

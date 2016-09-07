@@ -152,19 +152,15 @@
 					required : true,
 				},
 				highlight : function(element) {
-					$(element).closest('.form_group')
-							.removeClass('has-success')
-							.addClass('has_error');
+					$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
 				},
 				unhighlight : function(element) {
-					$(element).closest('.form_group')
-							.removeClass('has-error').addClass(
-									'has_success');
-				}, messages:{
+					$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+				} /* messages:{
 					ssn:{
 						remote: "ssn number already exist."
 					}
-				}
+				} */
 				
 			}
 		});
@@ -177,7 +173,7 @@
 		        });
 		    });
 		
-		 $("#dob").prop("disabled", true);
+		  $("#dob").prop("disabled", true);
 			
 	});
 	
@@ -191,7 +187,7 @@
 
 </head>
 <body>
-	<!--  Registration success check. -->	
+	<!--  add/update success check. -->	
 	<c:if test="${success eq 'addUpdate'}">
 		<div class="alert alert-success"><spring:message code="label.contact.addUpdate.Success" /></div>
 	</c:if>
