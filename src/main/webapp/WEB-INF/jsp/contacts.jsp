@@ -15,20 +15,25 @@
 
 <style type="text/css">
 	/* tfoot input {
-		width: 100%;
-		padding: 3px;
-		box-sizing: border-box;
-	 */
+			width: 100%;
+			padding: 3px;
+			box-sizing: border-box;
+		}
+		 */
 	tfoot {
 		display: table-header-group;
 	}
 	
-	table td.first { 
-		display: none; 
+	table td.first {
+		display: none;
 	}
-	
-}
 </style>
+
+<script>
+$(document).ready(function(){
+    $('#example1').dataTable();
+});
+</script>
 
 
 <script type="text/javascript">
@@ -40,8 +45,8 @@
 			$("#modalRemove").modal();
 			
 			
-			var table = $('#example').DataTable();
-			$("#example tfoot th").each(function(i) {
+			var table = $('#example1').DataTable();
+			$("#example1 tfoot th").each(function(i) {
 				var select = $('<select><option value=""></option></select>')
 				.appendTo($(this).empty())
 				.on('change',function() {
@@ -187,55 +192,60 @@
 
 </head>
 <body>
-	<!--  add/update success check. -->	
+	<!--  Registration success check. -->	
 	<c:if test="${success eq 'addUpdate'}">
 		<div class="alert alert-success"><spring:message code="label.contact.addUpdate.Success" /></div>
 	</c:if>
 
-	<div>
-	<table id="example"
-		class="table table-bordered table-hover table-striped display">
-		<thead>
-			<tr>
-				<th style="display:none;">Id</th>
-				<th><spring:message code="label.contact.fName"></spring:message></th>
-				<th><spring:message code="label.contact.lName"></spring:message></th>
-				<th><spring:message code="label.contact.dob"></spring:message></th>
-				<th><spring:message code="label.contact.ssn"></spring:message></th>
-				<th><spring:message code="label.contact.street"></spring:message></th>
-				<th><spring:message code="label.contact.city"></spring:message></th>
-				<th><spring:message code="label.contact.state"></spring:message></th>
-				<th><spring:message code="label.contact.zip"></spring:message></th>
-				<th><spring:message code="label.contact.user"></spring:message></th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${contacts}" var="contact" varStatus="index">
+	<div class="table-responsive">
+		<table id="example1" class="display table" width="100%">
+			<thead>
 				<tr>
-					<td id="id${index.index }" style="display:none;">${contact.id}</td>
-					<td id="fName${index.index }">${contact.firstName}</td>
-					<td id="lName${index.index }">${contact.lastName}</td>
-					<td id="dob${index.index }">${contact.dob}</td>
-					<td id="ssn${index.index }">${contact.ssn}</td>
-					<td id="street${index.index }">${contact.street}</td>
-					<td id="city${index.index }">${contact.city}</td>
-					<td id="state${index.index }">${contact.state}</td>
-					<td id="zip${index.index }">${contact.zip}</td>
-					<td id="username${index.index }">${contact.userName}</td>
-					<td>
-					<button type="button" class="btn  btn-primary triggerEdit"
-						data-toggle="modal" data-target="#myModal1" data-index="${index.index }">
-						<spring:message code="label.contact.edit"></spring:message>
-					</button>
-					</td>
-					<td><a
-						href='<spring:url value="/contacts/remove/${contact.id}.html" ></spring:url>'
-						class="btn btn-danger triggerRemove"><spring:message code="label.remove.removeContact"></spring:message></a>
-					</td>
-					
+					<th style="display: none;">Id</th>
+					<th><spring:message code="label.contact.fName"></spring:message></th>
+					<th><spring:message code="label.contact.lName"></spring:message></th>
+					<th><spring:message code="label.contact.dob"></spring:message></th>
+					<th><spring:message code="label.contact.lName"></spring:message></th>
+					<th><spring:message code="label.contact.dob"></spring:message></th>
+					<th><spring:message code="label.contact.city"></spring:message></th>
+					<th><spring:message code="label.contact.state"></spring:message></th>
+					<th><spring:message code="label.contact.zip"></spring:message></th>
+					<th><spring:message code="label.contact.user"></spring:message></th>
+					<th><spring:message code="label.contact.edit"></spring:message></th>
+					<th><spring:message code="label.remove.removeContact"></spring:message></th>
 				</tr>
-			</c:forEach>
-	</table>
+			</thead>
+			<tbody>
+				<c:forEach items="${contacts}" var="contact" varStatus="index">
+					<tr>
+						<td id="id${index.index }" style="display: none;">${contact.id}</td>
+						<td id="fName${index.index }">${contact.firstName}</td>
+						<td id="lName${index.index }">${contact.lastName}</td>
+						<td id="dob${index.index }">${contact.dob}</td>
+						<td id="ssn${index.index }">${contact.ssn}</td>
+						<td id="street${index.index }">${contact.street}</td>
+						<td id="city${index.index }">${contact.city}</td>
+						<td id="state${index.index }">${contact.state}</td>
+						<td id="zip${index.index }">${contact.zip}</td>
+						<td id="username${index.index }">${contact.userName}</td>
+						<td>
+							<button type="button" class="btn  btn-primary triggerEdit"
+								data-toggle="modal" data-target="#myModal1"
+								data-index="${index.index }">
+								<spring:message code="label.contact.edit"></spring:message>
+							</button>
+						</td>
+						<td><a
+							href='<spring:url value="/contacts/remove/${contact.id}.html" ></spring:url>'
+							class="btn btn-danger triggerRemove"><spring:message
+									code="label.remove.removeContact"></spring:message></a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+
+
 
 	<!-- ---------------------- Start: Contact Delete Confirmation Message ----------------  -->
 	<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog"

@@ -46,7 +46,7 @@
 </style>
 
 <body>
-	<div class="container">
+	<div class="Container">
 		<c:if test="${not empty error}">
 			<div class="error">${error}</div>
 		</c:if>
