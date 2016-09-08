@@ -89,6 +89,13 @@
 							<li><a href="?language=de"><spring:message
 										code="label.header.other" /></a></li>
 						</ul></li>
+						
+						<c:if test="${pageContext.request.userPrincipal.name != null}">
+							<li>
+								<a href=''>Welcome : ${pageContext.request.userPrincipal.name}</a>
+							</li>
+						</c:if>
+
 				</ul>
 				</div>
 			</div>

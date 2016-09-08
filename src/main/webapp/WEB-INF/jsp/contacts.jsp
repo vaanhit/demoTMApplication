@@ -43,23 +43,27 @@ $(document).ready(function(){
 			e.preventDefault();
 			$("#modalRemove .removebtn").attr("href", $(this).attr("href"));
 			$("#modalRemove").modal();
-			
-			
-			var table = $('#example1').DataTable();
-			$("#example1 tfoot th").each(function(i) {
-				var select = $('<select><option value=""></option></select>')
-				.appendTo($(this).empty())
-				.on('change',function() {
-					table.column(i).search($(this).val()).draw();
+		});
+		
+		/* $(".triggerRemoveAll").click(function(e) {
+			e.preventDefault();
+			$("#modalRemove .removebtn").attr("href", $(this).attr("href"));
+			$("#modalRemove").modal(); 
+		}); */
+		
+		var table = $('#example1').DataTable();
+		$("#example1 tfoot th").each(function(i) {
+			var select = $('<select><option value=""></option></select>')
+			.appendTo($(this).empty())
+			.on('change',function() {
+				table.column(i).search($(this).val()).draw();
+			});
+			table.column(i).data().unique().sort().each(
+				function(d, j) {
+					select.append('<option value="'+d+'">'
+									+ d
+									+ '</option>')
 				});
-				table.column(i).data().unique().sort().each(
-					function(d, j) {
-						select.append('<option value="'+d+'">'
-										+ d
-										+ '</option>')
-					});
-				});
-
 		});
 		
 		var currentIndex;
@@ -76,6 +80,8 @@ $(document).ready(function(){
 				$("#state").val($("#state" + currentIndex).text());
 				$("#zip").val($("#zip" + currentIndex).text());
 				$("#username").val($("#username" + currentIndex).text());
+				
+				//alert($("#username" + currentIndex).text());
 			}
 		});
 		
@@ -201,12 +207,13 @@ $(document).ready(function(){
 		<table id="example1" class="display table" width="100%">
 			<thead>
 				<tr>
+					<th></th>
 					<th style="display: none;">Id</th>
 					<th><spring:message code="label.contact.fName"></spring:message></th>
 					<th><spring:message code="label.contact.lName"></spring:message></th>
 					<th><spring:message code="label.contact.dob"></spring:message></th>
 					<th><spring:message code="label.contact.lName"></spring:message></th>
-					<th><spring:message code="label.contact.dob"></spring:message></th>
+					<th><spring:message code="label.contact.street"></spring:message></th>
 					<th><spring:message code="label.contact.city"></spring:message></th>
 					<th><spring:message code="label.contact.state"></spring:message></th>
 					<th><spring:message code="label.contact.zip"></spring:message></th>
@@ -218,6 +225,11 @@ $(document).ready(function(){
 			<tbody>
 				<c:forEach items="${contacts}" var="contact" varStatus="index">
 					<tr>
+						<td style="text-align:center;">
+							<c:if test="${(pageContext.request.userPrincipal.name == contact.userName) || (pageContext.request.userPrincipal.name == 'admin')}">
+								<input type="checkbox" name="myTextEditBox" value="checked" />
+							</c:if>
+						</td>
 						<td id="id${index.index }" style="display: none;">${contact.id}</td>
 						<td id="fName${index.index }">${contact.firstName}</td>
 						<td id="lName${index.index }">${contact.lastName}</td>
@@ -229,16 +241,23 @@ $(document).ready(function(){
 						<td id="zip${index.index }">${contact.zip}</td>
 						<td id="username${index.index }">${contact.userName}</td>
 						<td>
-							<button type="button" class="btn  btn-primary triggerEdit"
-								data-toggle="modal" data-target="#myModal1"
-								data-index="${index.index }">
-								<spring:message code="label.contact.edit"></spring:message>
-							</button>
+							<c:if test="${(pageContext.request.userPrincipal.name == contact.userName) || (pageContext.request.userPrincipal.name == 'admin')}">
+								<button type="button" class="btn  btn-primary triggerEdit"
+									data-toggle="modal" data-target="#myModal1"
+									data-index="${index.index }">
+									<spring:message code="label.contact.edit"></spring:message>
+								</button>
+							</c:if>
 						</td>
-						<td><a
-							href='<spring:url value="/contacts/remove/${contact.id}.html" ></spring:url>'
-							class="btn btn-danger triggerRemove"><spring:message
-									code="label.remove.removeContact"></spring:message></a></td>
+						<td>
+						
+							<c:if test="${(pageContext.request.userPrincipal.name == contact.userName) || (pageContext.request.userPrincipal.name == 'admin')}">
+								<a
+									href='<spring:url value="/contacts/remove/${contact.id}.html" ></spring:url>'
+									class="btn btn-danger triggerRemove"><spring:message
+										code="label.remove.removeContact"></spring:message></a>
+							</c:if>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -272,6 +291,12 @@ $(document).ready(function(){
 	</div>
 	<!-- ---------------------- End: Contact Delete Confirmation Message ----------------  -->
 	
+	<!-- Start: Delete All button -->
+	<button type="button" 
+		class="btn btn-danger btn-primary btn-lg triggerRemoveAll"><spring:message
+			code="label.remove.removeContacts"></spring:message></button>
+	<!-- End: Delete All button -->
+	
 	<!-- ---------------------- Start: Add new Contact ----------------------------------  -->
 	<!-- Button trigger modal -->
 	<button type="button" class="btn btn-primary btn-lg triggerAdd"
@@ -300,7 +325,7 @@ $(document).ready(function(){
 				<div class="modal-body">
 					<div class="form-group">
 						<!-- <label path="id" id="contactId" style="visibility: hidden"/> -->
-						<form:input path="id" id="contactId" style="visibility: hidden" cssClass="form-control" />
+						<form:input type="hidden" path="id" id="contactId" style="visibility: hidden" cssClass="form-control" />
 					</div>
 					<div class="form-group">
 						<label for="firstname" class="col-sm-2 control-label">
@@ -374,6 +399,9 @@ $(document).ready(function(){
 						<div class="col-sm-10">
 							<form:input path="zip" id="zip" cssClass="form-control" />
 						</div>
+					</div>
+					<div class="form-group">
+							<form:input path="userName" type="hidden" id="username" style="visibility: hidden" cssClass="form-control" />
 					</div>
 				</div>
 				<!-- End: body of the popup -->
