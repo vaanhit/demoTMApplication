@@ -1,6 +1,5 @@
 package com.att.demo.service.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

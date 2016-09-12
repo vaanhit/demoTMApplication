@@ -27,9 +27,17 @@
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	</bean>
+	
+	<!-- For excel view. -->
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location">
+			<value>/WEB-INF/defs/spring-excel-views.xml</value>
+		</property>
+		<property name="order" value="0" />
+	</bean>
 
 	<!-- ************************************************************************************************************* -->
-	
+
 	<!-- *******************Load the properties files for Locale ******************* -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -49,6 +57,6 @@
 		</bean>
 	</mvc:interceptors>
 	<!-- ************************************************************************************************************* -->
-	
+
 
 </beans>

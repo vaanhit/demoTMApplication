@@ -202,6 +202,8 @@ $(document).ready(function(){
 	<c:if test="${success eq 'addUpdate'}">
 		<div class="alert alert-success"><spring:message code="label.contact.addUpdate.Success" /></div>
 	</c:if>
+	
+	<th><a href="/demoTMApplication/contactExport.xls">Download Excel Document</a></th>
 
 	<div class="table-responsive">
 		<table id="example1" class="display table" width="100%">
