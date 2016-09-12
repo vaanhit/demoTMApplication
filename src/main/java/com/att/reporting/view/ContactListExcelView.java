@@ -6,8 +6,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 
@@ -31,7 +35,12 @@ public class ContactListExcelView extends AbstractXlsView {
 		setExcelHeader(excelSheet);
 
 		List<Contact> contactList = (List<Contact>) model.get("contactList");
-		setExcelRows(excelSheet, contactList);
+
+		// Handle date format with cell style
+		CellStyle cellStyle = workbook.createCellStyle();
+		CreationHelper creationHelper = workbook.getCreationHelper();
+		cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("MM/DD/YYYY"));
+		setExcelRows(excelSheet, contactList, cellStyle);
 	}
 
 	/**
@@ -54,13 +63,18 @@ public class ContactListExcelView extends AbstractXlsView {
 	 * @param excelSheet
 	 * @param itemList
 	 */
-	public void setExcelRows(HSSFSheet excelSheet, List<Contact> contactList) {
+	public void setExcelRows(HSSFSheet excelSheet, List<Contact> contactList, CellStyle cellStyle) {
 		int record = 1;
 		for (Contact contact : contactList) {
 			HSSFRow excelRow = excelSheet.createRow(record++);
 			excelRow.createCell(0).setCellValue(contact.getFirstName());
 			excelRow.createCell(1).setCellValue(contact.getLastName());
-			excelRow.createCell(2).setCellValue(contact.getDob());
+
+			// handle date format
+			HSSFCell hc = excelRow.createCell(2);
+			hc.setCellValue(contact.getDob());
+			hc.setCellStyle(cellStyle);
+
 			excelRow.createCell(3).setCellValue(contact.getSsn());
 			excelRow.createCell(4).setCellValue(contact.getStreet());
 			excelRow.createCell(5).setCellValue(contact.getCity());
