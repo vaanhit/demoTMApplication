@@ -108,7 +108,11 @@ public class ContactController {
 		try {
 			contact.setDob(new Date()); // should come from date picker - will
 										// work and fix
-			con = contactService.saveContact(contact, Currentname);
+			if (contact.getUserName().equalsIgnoreCase("")) {
+				contact.setUserName(Currentname);
+			}
+			
+			con = contactService.saveContact(contact);
 		} catch (IllegalArgumentException exp) {
 			throw new ContactNotFoundException();
 		} catch (AccessDeniedException exp) {
@@ -133,11 +137,11 @@ public class ContactController {
 	@ResponseBody
 	public String available(@RequestParam Long ssn, @RequestParam Integer id) {
 		Contact con = contactService.findOneByssn(ssn);
-		Boolean available = true; 
-		if(con == null || id == con.getId()) {
+		Boolean available = true;
+		if (con == null || id == con.getId()) {
 			available = false;
 		}
-		
+
 		System.out.println(available);
 		return available.toString();
 	}

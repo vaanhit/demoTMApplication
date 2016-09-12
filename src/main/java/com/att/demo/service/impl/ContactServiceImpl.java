@@ -5,9 +5,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort.Direction;
 
 import com.att.demo.entity.Contact;
 import com.att.demo.repository.ContactRepository;
@@ -33,8 +35,7 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	@Transactional
 	@PreAuthorize("#contact.userName == authentication.name or hasRole('ROLE_ADMIN')")
-	public Contact saveContact(@P("contact") Contact contact, String userName) {
-		contact.setUserName(userName);
+	public Contact saveContact(@P("contact") Contact contact) {
 		return contactRepository.save(contact);
 	}
 
@@ -45,6 +46,12 @@ public class ContactServiceImpl implements ContactService {
 	@Transactional
 	public List<Contact> getContact(String userName) {
 		List<Contact> con = contactRepository.findAll();
+		
+		//Find By username with native query. 
+		//List<Contact> con = contactRepository.getAllContacts("admin");
+		
+		//Pagination from server side.
+		//List<Contact> con = contactRepository.findAll(new PageRequest(0, 4, Direction.DESC, "userName")).getContent();
 
 		return con;
 	}

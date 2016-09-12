@@ -88,7 +88,14 @@
 										code="label.header.chinese" /></a></li>
 							<li><a href="?language=de"><spring:message
 										code="label.header.other" /></a></li>
-						</ul></li>
+						</ul>
+						
+						<li>
+							<c:if test="${pageContext.request.userPrincipal.name != null}">
+									<a href=''>${pageContext.request.userPrincipal.name}</a>
+							</c:if>
+						</li>
+
 				</ul>
 				</div>
 			</div>

@@ -11,9 +11,12 @@
 	<http use-expressions="true" auto-config="true">
 		<csrf disabled="true" />
 		<intercept-url pattern="/contacts**" access="hasRole('ROLE_USER')" /> 
-			<intercept-url pattern="/contacts/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/contacts/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/adminConsole**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/adminConsole/**" access="hasRole('ROLE_ADMIN')" />
+			
 
-		<form-login login-page="/login.html" authentication-failure-url="/Access_Denied"/> <!-- authentication-failure-url="/Access_Denied" -->
+		<form-login login-page="/login.html" authentication-failure-url="/loginError.html?error"/> <!-- authentication-failure-url="/Access_Denied" -->
 		<logout />
 	</http>
 
@@ -23,7 +26,8 @@
 			<user-service>
 				<user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
 				<user name="rohit" password="rohit" authorities="ROLE_USER" />
-				<user name="bhatia" password="bhatia" authorities="ROLE_USER" />
+				<user name="rohit1" password="rohit1" authorities="ROLE_USER" />
+				<user name="rohit2" password="rohit2" authorities="ROLE_USER" />
 			</user-service>
 
 			<!--<password-encoder hash="bcrypt"/> <jdbc-user-service data-source-ref="dataSource" 

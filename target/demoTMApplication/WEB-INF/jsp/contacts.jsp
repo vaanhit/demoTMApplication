@@ -15,20 +15,25 @@
 
 <style type="text/css">
 	/* tfoot input {
-		width: 100%;
-		padding: 3px;
-		box-sizing: border-box;
-	 */
+			width: 100%;
+			padding: 3px;
+			box-sizing: border-box;
+		}
+		 */
 	tfoot {
 		display: table-header-group;
 	}
 	
-	table td.first { 
-		display: none; 
+	table td.first {
+		display: none;
 	}
-	
-}
 </style>
+
+<script>
+$(document).ready(function(){
+    $('#example1').dataTable();
+});
+</script>
 
 
 <script type="text/javascript">
@@ -38,23 +43,27 @@
 			e.preventDefault();
 			$("#modalRemove .removebtn").attr("href", $(this).attr("href"));
 			$("#modalRemove").modal();
-			
-			
-			var table = $('#example').DataTable();
-			$("#example tfoot th").each(function(i) {
-				var select = $('<select><option value=""></option></select>')
-				.appendTo($(this).empty())
-				.on('change',function() {
-					table.column(i).search($(this).val()).draw();
+		});
+		
+		/* $(".triggerRemoveAll").click(function(e) {
+			e.preventDefault();
+			$("#modalRemove .removebtn").attr("href", $(this).attr("href"));
+			$("#modalRemove").modal(); 
+		}); */
+		
+		var table = $('#example1').DataTable();
+		$("#example1 tfoot th").each(function(i) {
+			var select = $('<select><option value=""></option></select>')
+			.appendTo($(this).empty())
+			.on('change',function() {
+				table.column(i).search($(this).val()).draw();
+			});
+			table.column(i).data().unique().sort().each(
+				function(d, j) {
+					select.append('<option value="'+d+'">'
+									+ d
+									+ '</option>')
 				});
-				table.column(i).data().unique().sort().each(
-					function(d, j) {
-						select.append('<option value="'+d+'">'
-										+ d
-										+ '</option>')
-					});
-				});
-
 		});
 		
 		var currentIndex;
@@ -71,6 +80,8 @@
 				$("#state").val($("#state" + currentIndex).text());
 				$("#zip").val($("#zip" + currentIndex).text());
 				$("#username").val($("#username" + currentIndex).text());
+				
+				//alert($("#username" + currentIndex).text());
 			}
 		});
 		
@@ -152,19 +163,15 @@
 					required : true,
 				},
 				highlight : function(element) {
-					$(element).closest('.form_group')
-							.removeClass('has-success')
-							.addClass('has_error');
+					$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
 				},
 				unhighlight : function(element) {
-					$(element).closest('.form_group')
-							.removeClass('has-error').addClass(
-									'has_success');
-				}, messages:{
+					$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+				} /* messages:{
 					ssn:{
 						remote: "ssn number already exist."
 					}
-				}
+				} */
 				
 			}
 		});
@@ -177,7 +184,7 @@
 		        });
 		    });
 		
-		 $("#dob").prop("disabled", true);
+		  $("#dob").prop("disabled", true);
 			
 	});
 	
@@ -196,50 +203,68 @@
 		<div class="alert alert-success"><spring:message code="label.contact.addUpdate.Success" /></div>
 	</c:if>
 
-	<div>
-	<table id="example"
-		class="table table-bordered table-hover table-striped display">
-		<thead>
-			<tr>
-				<th style="display:none;">Id</th>
-				<th><spring:message code="label.contact.fName"></spring:message></th>
-				<th><spring:message code="label.contact.lName"></spring:message></th>
-				<th><spring:message code="label.contact.dob"></spring:message></th>
-				<th><spring:message code="label.contact.ssn"></spring:message></th>
-				<th><spring:message code="label.contact.street"></spring:message></th>
-				<th><spring:message code="label.contact.city"></spring:message></th>
-				<th><spring:message code="label.contact.state"></spring:message></th>
-				<th><spring:message code="label.contact.zip"></spring:message></th>
-				<th><spring:message code="label.contact.user"></spring:message></th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${contacts}" var="contact" varStatus="index">
+	<div class="table-responsive">
+		<table id="example1" class="display table" width="100%">
+			<thead>
 				<tr>
-					<td id="id${index.index }" style="display:none;">${contact.id}</td>
-					<td id="fName${index.index }">${contact.firstName}</td>
-					<td id="lName${index.index }">${contact.lastName}</td>
-					<td id="dob${index.index }">${contact.dob}</td>
-					<td id="ssn${index.index }">${contact.ssn}</td>
-					<td id="street${index.index }">${contact.street}</td>
-					<td id="city${index.index }">${contact.city}</td>
-					<td id="state${index.index }">${contact.state}</td>
-					<td id="zip${index.index }">${contact.zip}</td>
-					<td id="username${index.index }">${contact.userName}</td>
-					<td>
-					<button type="button" class="btn  btn-primary triggerEdit"
-						data-toggle="modal" data-target="#myModal1" data-index="${index.index }">
-						<spring:message code="label.contact.edit"></spring:message>
-					</button>
-					</td>
-					<td><a
-						href='<spring:url value="/contacts/remove/${contact.id}.html" ></spring:url>'
-						class="btn btn-danger triggerRemove"><spring:message code="label.remove.removeContact"></spring:message></a>
-					</td>
-					
+					<th></th>
+					<th style="display: none;">Id</th>
+					<th><spring:message code="label.contact.fName"></spring:message></th>
+					<th><spring:message code="label.contact.lName"></spring:message></th>
+					<th><spring:message code="label.contact.dob"></spring:message></th>
+					<th><spring:message code="label.contact.ssn"></spring:message></th>
+					<th><spring:message code="label.contact.street"></spring:message></th>
+					<th><spring:message code="label.contact.city"></spring:message></th>
+					<th><spring:message code="label.contact.state"></spring:message></th>
+					<th><spring:message code="label.contact.zip"></spring:message></th>
+					<th><spring:message code="label.contact.user"></spring:message></th>
+					<th><spring:message code="label.contact.edit"></spring:message></th>
+					<th><spring:message code="label.remove.removeContact"></spring:message></th>
 				</tr>
-			</c:forEach>
-	</table>
+			</thead>
+			<tbody>
+				<c:forEach items="${contacts}" var="contact" varStatus="index">
+					<tr>
+						<td style="text-align:center;">
+							<c:if test="${(pageContext.request.userPrincipal.name == contact.userName) || (pageContext.request.userPrincipal.name == 'admin')}">
+								<input type="checkbox" name="myTextEditBox" value="checked" />
+							</c:if>
+						</td>
+						<td id="id${index.index }" style="display: none;">${contact.id}</td>
+						<td id="fName${index.index }">${contact.firstName}</td>
+						<td id="lName${index.index }">${contact.lastName}</td>
+						<td id="dob${index.index }">${contact.dob}</td>
+						<td id="ssn${index.index }">${contact.ssn}</td>
+						<td id="street${index.index }">${contact.street}</td>
+						<td id="city${index.index }">${contact.city}</td>
+						<td id="state${index.index }">${contact.state}</td>
+						<td id="zip${index.index }">${contact.zip}</td>
+						<td id="username${index.index }">${contact.userName}</td>
+						<td>
+							<c:if test="${(pageContext.request.userPrincipal.name == contact.userName) || (pageContext.request.userPrincipal.name == 'admin')}">
+								<button type="button" class="btn  btn-primary triggerEdit"
+									data-toggle="modal" data-target="#myModal1"
+									data-index="${index.index }">
+									<spring:message code="label.contact.edit"></spring:message>
+								</button>
+							</c:if>
+						</td>
+						<td>
+						
+							<c:if test="${(pageContext.request.userPrincipal.name == contact.userName) || (pageContext.request.userPrincipal.name == 'admin')}">
+								<a
+									href='<spring:url value="/contacts/remove/${contact.id}.html" ></spring:url>'
+									class="btn btn-danger triggerRemove"><spring:message
+										code="label.remove.removeContact"></spring:message></a>
+							</c:if>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+
+
 
 	<!-- ---------------------- Start: Contact Delete Confirmation Message ----------------  -->
 	<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog"
@@ -265,6 +290,12 @@
 	</div>
 	</div>
 	<!-- ---------------------- End: Contact Delete Confirmation Message ----------------  -->
+	
+	<!-- Start: Delete All button -->
+	<%-- <button type="button" 
+		class="btn btn-danger btn-primary btn-lg triggerRemoveAll"><spring:message
+			code="label.remove.removeContacts"></spring:message></button> --%>
+	<!-- End: Delete All button -->
 	
 	<!-- ---------------------- Start: Add new Contact ----------------------------------  -->
 	<!-- Button trigger modal -->
@@ -294,7 +325,7 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<!-- <label path="id" id="contactId" style="visibility: hidden"/> -->
-						<form:input path="id" id="contactId" style="visibility: hidden" cssClass="form-control" />
+						<form:input type="hidden" path="id" id="contactId" style="visibility: hidden" cssClass="form-control" />
 					</div>
 					<div class="form-group">
 						<label for="firstname" class="col-sm-2 control-label">
@@ -368,6 +399,9 @@
 						<div class="col-sm-10">
 							<form:input path="zip" id="zip" cssClass="form-control" />
 						</div>
+					</div>
+					<div class="form-group">
+							<form:input path="userName" type="hidden" id="username" style="visibility: hidden" cssClass="form-control" />
 					</div>
 				</div>
 				<!-- End: body of the popup -->

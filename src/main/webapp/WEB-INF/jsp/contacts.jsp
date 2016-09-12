@@ -212,7 +212,7 @@ $(document).ready(function(){
 					<th><spring:message code="label.contact.fName"></spring:message></th>
 					<th><spring:message code="label.contact.lName"></spring:message></th>
 					<th><spring:message code="label.contact.dob"></spring:message></th>
-					<th><spring:message code="label.contact.lName"></spring:message></th>
+					<th><spring:message code="label.contact.ssn"></spring:message></th>
 					<th><spring:message code="label.contact.street"></spring:message></th>
 					<th><spring:message code="label.contact.city"></spring:message></th>
 					<th><spring:message code="label.contact.state"></spring:message></th>
@@ -292,9 +292,9 @@ $(document).ready(function(){
 	<!-- ---------------------- End: Contact Delete Confirmation Message ----------------  -->
 	
 	<!-- Start: Delete All button -->
-	<button type="button" 
+	<%-- <button type="button" 
 		class="btn btn-danger btn-primary btn-lg triggerRemoveAll"><spring:message
-			code="label.remove.removeContacts"></spring:message></button>
+			code="label.remove.removeContacts"></spring:message></button> --%>
 	<!-- End: Delete All button -->
 	
 	<!-- ---------------------- Start: Add new Contact ----------------------------------  -->

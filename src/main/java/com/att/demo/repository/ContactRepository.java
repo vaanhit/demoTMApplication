@@ -1,5 +1,7 @@
 package com.att.demo.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,4 +19,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
 	 */
 	@Query(nativeQuery = true, value = "select * from contact where ssn= ? ")
 	public Contact findByssn(Long ssn);
+	
+	@Query(nativeQuery = true, value = "select * from contact where userName= ? ")
+	public List<Contact> getAllContacts(String user);
 }

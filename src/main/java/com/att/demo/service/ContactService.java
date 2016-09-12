@@ -10,12 +10,12 @@ import com.att.demo.entity.Contact;
  */
 public interface ContactService {
 
+	
 	/**
-	 * @param item
-	 * @param id
+	 * @param contact
+	 * @return
 	 */
-	public Contact saveContact(Contact contact, String userName);
-
+	public Contact saveContact(Contact contact); 
 	/**
 	 * @return
 	 */
