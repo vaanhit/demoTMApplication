@@ -10,12 +10,12 @@ import com.att.demo.entity.Contact;
  */
 public interface ContactService {
 
-	
 	/**
 	 * @param contact
 	 * @return
 	 */
-	public Contact saveContact(Contact contact); 
+	public Contact saveContact(Contact contact);
+
 	/**
 	 * @return
 	 */
@@ -25,6 +25,11 @@ public interface ContactService {
 	 * @return
 	 */
 	public void removeContact(Contact con);
+
+	/**
+	 * @param ids
+	 */
+	public void removeeContacts(String ids);
 
 	/**
 	 * @param id

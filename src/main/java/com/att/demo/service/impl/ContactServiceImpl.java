@@ -2,6 +2,9 @@ package com.att.demo.service.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.data.domain.Sort.Direction;
 
 import com.att.demo.entity.Contact;
@@ -24,6 +28,9 @@ public class ContactServiceImpl implements ContactService {
 
 	@Autowired
 	private ContactRepository contactRepository;
+	
+	 @PersistenceContext
+	 private EntityManager manager;
 
 	public ContactServiceImpl() {
 		// TODO Auto-generated constructor stub
@@ -74,6 +81,23 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	public Contact findOneByssn(Long ssn) {
 		return contactRepository.findByssn(ssn);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.att.demo.service.ContactService#removeeContacts(java.lang.String)
+	 * 
+	 * Implement JPQL for demo.
+	 */
+	@Override
+	@Transactional
+    @Rollback(true)
+	public void removeeContacts(String ids) {
+		try {
+			Query query = manager.createNativeQuery("DELETE FROM CONTACT WHERE ID in (" + ids + ")");
+			query.executeUpdate();
+		} catch(Exception exp) {
+			exp.printStackTrace();
+		}
 	}
 
 }

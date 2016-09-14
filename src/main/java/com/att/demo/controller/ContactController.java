@@ -1,6 +1,7 @@
 package com.att.demo.controller;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,6 +85,19 @@ public class ContactController {
 
 		return "redirect:/contacts.html";
 	}
+	
+	/**
+	 * @param ids
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/removeM", method = RequestMethod.POST)
+	public String removeMultipleContacts(@RequestBody String[] ids) { 
+		
+		String strOfInts = Arrays.toString(ids).replaceAll("\\[|\\]","");
+		contactService.removeeContacts(strOfInts);
+		return "success";
+	}
 
 	/**
 	 * @param model
@@ -142,7 +157,6 @@ public class ContactController {
 			available = false;
 		}
 
-		System.out.println(available);
 		return available.toString();
 	}
 

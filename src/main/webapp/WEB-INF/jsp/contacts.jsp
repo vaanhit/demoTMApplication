@@ -38,18 +38,51 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.nav-tabs a:first').tab('show') // Select first tab 
+		//$('.nav-tabs a:first').tab('show'); // Select first tab 
 		$(".triggerRemove").click(function(e) {
 			e.preventDefault();
 			$("#modalRemove .removebtn").attr("href", $(this).attr("href"));
-			$("#modalRemove").modal();
+			$("#modalRemove").modal();   
 		});
 		
-		/* $(".triggerRemoveAll").click(function(e) {
-			e.preventDefault();
-			$("#modalRemove .removebtn").attr("href", $(this).attr("href"));
-			$("#modalRemove").modal(); 
-		}); */
+		$(".triggerRemoveAll").click(function(e) {
+			removeRowUsingAjax();
+			 /* e.preventDefault();
+			$("#modalRemove .removebtn").click(function() {
+				removeRowUsingAjax();	
+			});
+			$("#modalRemove").modal(); */  
+		}); 
+		
+		function removeRowUsingAjax() {
+			var values = new Array();
+			$.each($("input[name='case[]']:checked").closest("td").next("td"),
+				function() {
+				 values.push($(this).text());
+			});
+			if (values == "") {
+				alert("Please select some value");
+				return;
+			}
+			
+			var jsonString =JSON.stringify(values); 
+			
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url: "<spring:url value='/contacts/removeM.html'/>",
+				//dataType	 : 'json', 
+				data	: jsonString,//JSON.stringify(jsonString),
+				cache: false, 
+				processData:false,
+				success	: function (data) {
+					$.each($("input[name='case[]']:checked").parents("tr").remove());
+				},
+				error	: function (e) {
+					alert("error");
+				}				
+			});
+		}
 		
 		var table = $('#example1').DataTable();
 		$("#example1 tfoot th").each(function(i) {
@@ -229,10 +262,10 @@ $(document).ready(function(){
 					<tr>
 						<td style="text-align:center;">
 							<c:if test="${(pageContext.request.userPrincipal.name == contact.userName) || (pageContext.request.userPrincipal.name == 'admin')}">
-								<input type="checkbox" name="myTextEditBox" value="checked" />
+								<input type="checkbox" name="case[]" class="case" value="checked" />
 							</c:if>
 						</td>
-						<td id="id${index.index }" style="display: none;">${contact.id}</td>
+						<td id="id${index.index }" style="display: none; visibility:hidden" type="hidden">${contact.id}</td>
 						<td id="fName${index.index }">${contact.firstName}</td>
 						<td id="lName${index.index }">${contact.lastName}</td>
 						<td id="dob${index.index }">${contact.dob}</td>
@@ -294,9 +327,9 @@ $(document).ready(function(){
 	<!-- ---------------------- End: Contact Delete Confirmation Message ----------------  -->
 	
 	<!-- Start: Delete All button -->
-	<%-- <button type="button" 
+	<button type="button" 
 		class="btn btn-danger btn-primary btn-lg triggerRemoveAll"><spring:message
-			code="label.remove.removeContacts"></spring:message></button> --%>
+			code="label.remove.removeContacts"></spring:message></button>
 	<!-- End: Delete All button -->
 	
 	<!-- ---------------------- Start: Add new Contact ----------------------------------  -->

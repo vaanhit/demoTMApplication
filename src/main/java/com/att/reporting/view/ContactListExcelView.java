@@ -78,8 +78,9 @@ public class ContactListExcelView extends AbstractXlsView {
 			excelRow.createCell(3).setCellValue(contact.getSsn());
 			excelRow.createCell(4).setCellValue(contact.getStreet());
 			excelRow.createCell(5).setCellValue(contact.getCity());
-			excelRow.createCell(6).setCellValue(contact.getZip());
-			excelRow.createCell(7).setCellValue(contact.getUserName());
+			excelRow.createCell(6).setCellValue(contact.getState());
+			excelRow.createCell(7).setCellValue(contact.getZip());
+			excelRow.createCell(8).setCellValue(contact.getUserName());
 		}
 	}
 
