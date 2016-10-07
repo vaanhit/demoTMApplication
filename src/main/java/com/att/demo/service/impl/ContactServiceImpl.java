@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.test.annotation.Rollback;
+//import org.springframework.test.annotation.Rollback;
 import org.springframework.data.domain.Sort.Direction;
 
 import com.att.demo.entity.Contact;
@@ -90,7 +90,7 @@ public class ContactServiceImpl implements ContactService {
 	 */
 	@Override
 	@Transactional
-    @Rollback(true)
+//    @Rollback(true)
 	public void removeeContacts(String ids) {
 		try {
 			Query query = manager.createNativeQuery("DELETE FROM CONTACT WHERE ID in (" + ids + ")");

@@ -8,7 +8,7 @@
 
 	<!-- Shared version number properties -->
 	<properties>
-		<org.springframework.version>4.2.2.RELEASE</org.springframework.version>
+		<org.springframework.version>4.2.5.RELEASE</org.springframework.version>
 		<apache.tiles>3.0.3</apache.tiles>
 		<spring.security.version>4.0.3.RELEASE</spring.security.version>
 		<spring.data.jpa>1.9.0.RELEASE</spring.data.jpa>
@@ -19,6 +19,7 @@
 		<org.slf4j.version>1.7.12</org.slf4j.version>
 		<log4j>1.2.17</log4j>
 		<apache.poi-version>3.9</apache.poi-version>
+		<selenium-java>2.45.0</selenium-java>
 	</properties>
 
 	<dependencies>
@@ -277,12 +278,39 @@
 			<artifactId>poi</artifactId>
 			<version>${apache.poi-version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/xml-apis/xml-apis -->
+<dependency>
+    <groupId>xml-apis</groupId>
+    <artifactId>xml-apis</artifactId>
+    <version>1.4.01</version>
+</dependency>
+		
 
 		<!-- Dependencies for testing -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${selenium-java}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.8</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -359,7 +387,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.5</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -394,7 +422,7 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<scm>
+	<!-- <scm>
 		<connection>scm:git:git@github.com:vaanhit/demoTMApplication.git</connection>
 		<developerConnection>scm:git:git@github.com:vaanhit/demoTMApplication.git</developerConnection>
 		<url>https://github.com/vaanhit/demoTMApplication.git</url>
@@ -419,5 +447,5 @@
 			<id>nexus-releases</id>
 			<url>http://ec2-54-161-219-42.compute-1.amazonaws.com:8081/nexus/content/repositories/thirdparty</url>
 		</repository>
-	</repositories>
+	</repositories> -->
 </project>
